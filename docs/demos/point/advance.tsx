@@ -66,10 +66,17 @@ function canvasClick(
   let x = ev.clientX;
   let y = ev.clientY;
   const rect = (ev.target as HTMLCanvasElement)?.getBoundingClientRect?.();
+  // 将坐标转换为 WebGL 坐标
   x = (x - rect?.left - canvas.width / 2) / (canvas.width / 2);
   y = (canvas.height / 2 - (y - rect?.top)) / (canvas.height / 2);
   gPoints.push([x, y]);
 
+  /**
+   * 鼠标滑入不同象限，点的颜色不同
+   * 1. 第一象限：展示红色
+   * 2. 第二象限：展示绿色
+   * 3. 第三象限：展示蓝色
+   */
   if (x >= 0.0 && y >= 0.0) {
     // 第一象限
     gColors.push([1.0, 0.0, 0.0, 1.0]); // red
