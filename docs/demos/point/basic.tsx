@@ -6,8 +6,7 @@ export default function Basic() {
   return <Draw main={main} />;
 }
 
-function main() {
-  const canvas = document.querySelector('#glcanvas') as HTMLCanvasElement;
+function main(canvas) {
   const gl = canvas.getContext('webgl');
   if (!gl) {
     alert('无法初始化 WebGL，你的浏览器、操作系统或硬件等可能不支持 WebGL。');
@@ -34,12 +33,14 @@ function main() {
       gl_FragColor = uFragColor;
   }
   `;
+  
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
   if (!shaderProgram) throw new Error('initShaderProgram failed');
 
   const programInfo = {
     program: shaderProgram,
     attribLocations: {
+      // 获取 attribute 变量的存储位置
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
       pointSize: gl.getAttribLocation(shaderProgram, 'aPointSize'),
     },
