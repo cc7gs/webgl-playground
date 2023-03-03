@@ -1,6 +1,6 @@
 ---
 title: 通过鼠标点击绘制点
-group: 绘制一个点
+group: 绘制点
 order: 1
 ---
 

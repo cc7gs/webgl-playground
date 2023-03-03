@@ -50,6 +50,8 @@ const programInfo = {
     modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
   },
 };
+
+// buffer object
 const buffers = initBuffers(gl);
 
 // Draw the scene

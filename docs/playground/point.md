@@ -1,7 +1,7 @@
 ---
 title: 如何绘制一个点？
 group:
-  title: 绘制一个点
+  title: 绘制点
   order: 0
 ---
 
