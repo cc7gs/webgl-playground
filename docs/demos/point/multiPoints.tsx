@@ -43,14 +43,18 @@ function main(canvas: HTMLCanvasElement) {
 }
 
 function initBuffers(gl:WebGLRenderingContext, program: WebGLProgram) {
-  const vertices = new Float32Array([0.0, 0.5 -0.5, -0.5, 0.5, 0.5]);
+  const vertices = new Float32Array([0.0, 0.5, -0.5, -0.5, 0.5, 0.5]);
   // 顶点个数
   const n = 3;
 
   // 创建缓冲区对象
-  const pointBuffer = gl.createBuffer();
+  const vertexBuffer = gl.createBuffer();
+  if(!vertexBuffer){
+    alert('Failed to create the buffer object');
+    return -1;
+  }
   // 将缓冲区对象绑定到目标
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointBuffer);
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
   // 向缓冲区对象中写入数据
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
@@ -59,6 +63,6 @@ function initBuffers(gl:WebGLRenderingContext, program: WebGLProgram) {
   gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
   // 连接a_Position变量与分配给它的缓冲区对象
   gl.enableVertexAttribArray(aPosition);
-  
+
   return n;
 }
