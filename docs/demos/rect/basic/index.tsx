@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Draw from '../../Draw';
 import { initShaderProgram } from '../../utils';
 import { drawScene } from './drawScene';
@@ -36,24 +36,27 @@ function main(canvas: HTMLCanvasElement) {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
   }
 `;
-const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+  const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
-if (!shaderProgram) throw new Error('initShaderProgram failed');
+  if (!shaderProgram) throw new Error('initShaderProgram failed');
 
-const programInfo = {
-  program: shaderProgram,
-  attribLocations: {
-    vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-  },
-  uniformLocations: {
-    projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-    modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
-  },
-};
+  const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+      vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+    },
+    uniformLocations: {
+      projectionMatrix: gl.getUniformLocation(
+        shaderProgram,
+        'uProjectionMatrix',
+      ),
+      modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+    },
+  };
 
-// buffer object
-const buffers = initBuffers(gl);
+  // buffer object
+  const buffers = initBuffers(gl);
 
-// Draw the scene
-drawScene(gl, programInfo, buffers);
+  // Draw the scene
+  drawScene(gl, programInfo, buffers);
 }

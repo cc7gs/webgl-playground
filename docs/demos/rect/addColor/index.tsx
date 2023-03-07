@@ -1,4 +1,3 @@
-import React from 'react';
 import Draw from '../../Draw';
 import { initShaderProgram } from '../../utils';
 import { drawScene } from './drawScene';
@@ -25,7 +24,7 @@ function main(canvas: HTMLCanvasElement) {
 
     uniform mat4 uModelViewMatrix;
     uniform mat4 uProjectionMatrix;
-    
+
     varying lowp vec4 vColor;
 
     void main() {

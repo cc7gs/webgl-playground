@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import Draw from '../Draw';
 import { initShaderProgram } from '../utils';
 
@@ -6,7 +5,7 @@ export default function Advance() {
   return <Draw main={main} />;
 }
 
-function main(canvas) {
+function main(canvas: HTMLCanvasElement) {
   const gl = canvas.getContext('webgl');
   if (!gl) {
     alert('无法初始化 WebGL，你的浏览器、操作系统或硬件等可能不支持 WebGL。');

@@ -1,12 +1,24 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "skipLibCheck": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "importHelpers": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@@/*": [".dumi/tmp/*"]
+      "@@/*": [".dumi/tmp/*"],
+      "@/*": ["docs/demos/*"]
     }
   },
-  "include": [".dumi/**/*", ".dumirc.ts"]
+  "include": [".dumi/**/*", ".dumirc.ts", "docs"]
 }
