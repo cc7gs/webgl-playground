@@ -5,11 +5,6 @@ export default function Basic() {
   return <Draw main={main} />;
 }
 
-// 平移量
-const Tx = 0.5,
-  Ty = 0.5,
-  Tz = 0.0;
-
 function main(canvas: HTMLCanvasElement) {
   const gl = canvas.getContext('webgl');
   if (!gl) {
@@ -37,13 +32,21 @@ function main(canvas: HTMLCanvasElement) {
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
   if (!shaderProgram) throw new Error('initShaderProgram failed');
+
   const n = initVertexBuffer(gl, shaderProgram);
   // 获取uniform变量的存储位置
   const uTranslation = gl.getUniformLocation(shaderProgram, 'uTranslation');
+  // 平移量
+  const Tx = 0.5;
+  const Ty = 0.5;
+  const Tz = 0.0;
+
+  // 
+  gl.useProgram(shaderProgram);
+
   // 将平移量传输给顶点着色器
   gl.uniform4f(uTranslation, Tx, Ty, Tz, 0.0);
 
-  gl.useProgram(shaderProgram);
   gl.drawArrays(gl.TRIANGLES, 0, n);
 }
 
