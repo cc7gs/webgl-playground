@@ -33,9 +33,8 @@ function draw(
     uniformLocations: Record<string, WebGLUniformLocation | null>;
   },
 ) {
-  // 初始化矩阵和 mat4.create() 一样
-  const modelViewMatrix = mat4.create();
   // 设置旋转矩阵
+  const modelViewMatrix = mat4.create();
   mat4.rotateZ(modelViewMatrix, modelViewMatrix, angle);
   gl.uniformMatrix4fv(
     programInfo.uniformLocations.uModelFormMatrix,
