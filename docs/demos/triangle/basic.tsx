@@ -32,7 +32,6 @@ function main(canvas: HTMLCanvasElement) {
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
   if (!shaderProgram) throw new Error('initShaderProgram failed');
   const n = initVertexBuffer(gl, shaderProgram);
-  gl.useProgram(shaderProgram);
   gl.drawArrays(gl.TRIANGLES, 0, n);
 }
 

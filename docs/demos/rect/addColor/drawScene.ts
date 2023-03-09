@@ -49,8 +49,6 @@ export function drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, 
     // Tell WebGL how to pull out the colors from the color buffer
     setColorAttribute(gl,buffers,programInfo);
 
-    // Tell WebGL to use our program when drawing    
-    gl.useProgram(programInfo.program);
 
     // Set the shader uniforms
     gl.uniformMatrix4fv(

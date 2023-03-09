@@ -46,7 +46,6 @@ function main(canvas: HTMLCanvasElement) {
   const uCosB = gl.getUniformLocation(shaderProgram, 'uCosB');
   const uSinB = gl.getUniformLocation(shaderProgram, 'uSinB');
 
-  gl.useProgram(shaderProgram);
 
   // 旋转角度
   const ANGLE = 45.0;

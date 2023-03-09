@@ -46,8 +46,6 @@ function main(canvas: HTMLCanvasElement) {
     'uModelFormMatrix',
   );
 
-  gl.useProgram(shaderProgram);
-
   // 将角度转换为弧度制
   // 旋转矩阵,webGL中矩阵是列主序的
   const sx=1.5,sy=1.5,sz=1.5;

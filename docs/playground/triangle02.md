@@ -152,4 +152,9 @@ const formMatrix = new Float32Array([
 ]);
 ```
 
-<code src="../demos/triangle/zoom.tsx"></code>
+<code src="../demos/triangle/scale.tsx"></code>
+
+## 总结
+
+我们学会了使用矩阵来表示变换，以及如何使用矩阵来实现平移、旋转、缩放等变换。矩阵在计算机图形学中非常重要，我们后面的教程会广泛使用它，不过为了隐藏其中的数学细节我们后续会使用 [`gl-matrix`](https://www.npmjs.com/package/gl-matrix) 库来代替我们手动编写矩阵。
+下一章让一起来学习如何使用矩阵来实现更复杂的变换吧。

@@ -22,7 +22,7 @@ export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, f
         gl.getProgramInfoLog(shaderProgram);
         return null;
     }
-
+    gl.useProgram(shaderProgram);
     return shaderProgram;
 }
 

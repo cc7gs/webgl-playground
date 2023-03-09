@@ -37,7 +37,6 @@ function main(canvas: HTMLCanvasElement) {
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
   if (!shaderProgram) throw new Error('initShaderProgram failed');
   const n = initBuffers(gl, shaderProgram);
-  gl.useProgram(shaderProgram);
   gl.drawArrays(gl.POINTS, 0, n);
 }
 

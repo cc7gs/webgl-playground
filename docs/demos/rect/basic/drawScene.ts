@@ -46,9 +46,6 @@ export function drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, 
     // buffer into the vertexPosition attribute.
     setPositionAttribute(gl,buffers,programInfo)
     
-    // Tell WebGL to use our program when drawing    
-    gl.useProgram(programInfo.program);
-
     // Set the shader uniforms
     gl.uniformMatrix4fv(
         programInfo.uniformLocations.projectionMatrix,

@@ -57,6 +57,5 @@ function main(canvas: HTMLCanvasElement) {
    *   gl.vertexAttrib4fv(programInfo.attribLocations.vertexPosition, position);
    */
 
-  gl.useProgram(programInfo.program);
   gl.drawArrays(gl.POINTS, 0, 1);
 }

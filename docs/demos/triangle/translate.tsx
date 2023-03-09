@@ -41,9 +41,6 @@ function main(canvas: HTMLCanvasElement) {
   const Ty = 0.5;
   const Tz = 0.0;
 
-  // 
-  gl.useProgram(shaderProgram);
-
   // 将平移量传输给顶点着色器
   gl.uniform4f(uTranslation, Tx, Ty, Tz, 0.0);
 

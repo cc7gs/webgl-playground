@@ -50,7 +50,6 @@ function main(canvas: HTMLCanvasElement) {
     canvasClick(ev, gl, canvas, programInfo);
   };
 
-  gl.useProgram(programInfo.program);
   gl.drawArrays(gl.POINTS, 0, 1);
 }
 

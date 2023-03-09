@@ -46,8 +46,6 @@ function main(canvas: HTMLCanvasElement) {
     'uModelFormMatrix',
   );
 
-  gl.useProgram(shaderProgram);
-
   // 旋转角度
   const ANGLE = 45.0;
   // 将角度转换为弧度制
