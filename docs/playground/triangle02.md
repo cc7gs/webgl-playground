@@ -2,6 +2,7 @@
 title: 如何进行平移、旋转和缩放？
 group:
   title: 三角形系列
+order: 1
 ---
 
 ## 平移
