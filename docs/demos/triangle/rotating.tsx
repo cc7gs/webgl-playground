@@ -80,12 +80,17 @@ function draw(
   gl.drawArrays(gl.TRIANGLES, 0, n);
 }
 
-let g_last = Date.now();
+let lastTime = Date.now();
+/**
+ * 
+ * @param angle 旋转角度
+ * @returns {number} 更新后的旋转角度
+ */
 function animate(angle: number) {
   const now = Date.now();
   // 计算距离上次调用经过多长时间
-  const elapsed = now - g_last;
-  g_last = now;
+  const elapsed = now - lastTime;
+  lastTime = now;
   // 更新旋转角度
   const newAngle = angle + (ANGLE_STEP * elapsed) / 1000.0;
   return newAngle % 360;

@@ -46,4 +46,23 @@ function draw(
 }
 ```
 
+上面我们使用`requestAnimationFrame`来实现动画，它会在浏览器下一次重绘之前调用我们的回调函数，这样就可以保证动画的流畅性。因为每次绘制时间间隔不是固定的，所以我们需要定义一个变量来保存上一次调用的时间，然后在每一帧中，计算距离上次调用经过了多长时间，然后根据这个时间来更新旋转角度。
+
+```ts
+/**
+ *
+ * @param angle 旋转角度
+ * @returns {number} 更新后的旋转角度
+ */
+function animate(angle: number) {
+  const now = Date.now();
+  // 计算距离上次调用经过多长时间
+  const elapsed = now - lastTime;
+  lastTime = now;
+  // 更新旋转角度
+  const newAngle = angle + (ANGLE_STEP * elapsed) / 1000.0;
+  return newAngle % 360;
+}
+```
+
 <code src="../demos/triangle/rotating.tsx"></code>
