@@ -57,10 +57,9 @@ function initVertexBuffer(gl: WebGLRenderingContext, program: WebGLProgram) {
   // prettier-ignore
   const verticesTextureCoords = new Float32Array([
     // 顶点坐标，纹理坐标
-   -0.5, 0.5, 0.0, 1.0, 
-   -0.5, -0.5, 0.0, 0.0,
-    0.5, 0.5, 1.0, 1.0,
-    0.5, -0.5, 1.0,0.0,
+    0.0, 0.5, 0.5, 0.5,
+    -0.5, -0.5, 0.0, 0.0,
+    0.5, -0.5, 1.0, 0.0,
   ]);
   // ...
 
@@ -143,6 +142,23 @@ function loadTexture(
   // 绘制
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
 }
+```
+
+<code src="../demos/triangle/texture.tsx" ></code>
+
+## 拓展
+
+完整展示纹理图像，相当纹理坐标与顶点坐标一一对应。
+
+```ts
+// prettier-ignore
+const verticesTextureCoords = new Float32Array([
+    // 顶点坐标，纹理坐标
+    -0.5, 0.5, 0.0, 1.0,
+    -0.5, -0.5, 0.0, 0.0,
+    0.5, 0.5, 1.0, 1.0,
+    0.5, -0.5,1.0, 0.0,
+  ]);
 ```
 
 <code src="../demos/triangle/textureQuad.tsx" ></code>

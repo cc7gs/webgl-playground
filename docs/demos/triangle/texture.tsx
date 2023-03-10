@@ -43,13 +43,12 @@ function initVertexBuffer(gl: WebGLRenderingContext, program: WebGLProgram) {
   // prettier-ignore
   const verticesTextureCoords = new Float32Array([
     // 顶点坐标，纹理坐标
-    -0.5, 0.5, 0.0, 1.0,
+    0.0, 0.5, 0.5, 0.5,
     -0.5, -0.5, 0.0, 0.0,
-    0.5, 0.5, 1.0, 1.0,
-    0.5, -0.5,1.0, 0.0,
+    0.5, -0.5, 1.0, 0.0,
   ]);
   // 顶点个数
-  const n = 4;
+  const n = 3;
 
   // 创建缓冲区对象
   const vertexTextureCoordBuffer = gl.createBuffer();
@@ -140,7 +139,7 @@ function loadTexture(
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
-
+  
   // 绘制矩形
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+  gl.drawArrays(gl.TRIANGLES, 0, n);
 }
