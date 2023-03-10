@@ -133,23 +133,12 @@ a=sx,b=0,c=0,d=0,e=0,f=sy,g=0,h=0,i=0,j=0,k=sz,l=0,m=0,n=0,o=0,p=1。最终我�
 const sx = 1.5,
   sy = 1.5,
   sz = 1.5;
+// prettier-ignore
 const formMatrix = new Float32Array([
-  sx,
-  0,
-  0,
-  0,
-  0,
-  sy,
-  0,
-  0,
-  0,
-  0,
-  sz,
-  0,
-  0,
-  0,
-  0,
-  1,
+  sx,0,0,0,
+  0,sy,0,0,
+  0,0,sz,0,
+  0,0,0,1,
 ]);
 ```
 

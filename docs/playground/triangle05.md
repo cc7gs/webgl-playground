@@ -31,7 +31,7 @@ order: 4
 const vsSource = `
       attribute vec4 aVertexPosition;
       attribute vec4 aVertexColor;
-      varying lowp vec4 vColor;
+      varying vec4 vColor;
 
       void main(){
           gl_Position = aVertexPosition;
@@ -51,9 +51,11 @@ const fsSource = `
 2. 我们需要定义顶点的坐标与颜色
 
 ```ts
+// prettier-ignore
 const vertices = new Float32Array([
-  0.0, 0.5, 1.0, 0.0, 0.0, 1.0, -0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.5, -0.5, 0.0,
-  0.0, 1.0, 1.0,
+  0.0, 0.5, 1.0, 0.0, 0.0, 1.0,
+ -0.5, -0.5, 0.0, 1.0, 0.0, 1.0,
+  0.5, -0.5, 0.0, 0.0, 1.0, 1.0,
 ]);
 ```
 

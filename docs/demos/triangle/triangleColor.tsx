@@ -19,7 +19,7 @@ function main(canvas: HTMLCanvasElement) {
   const vsSource = `
       attribute vec4 aVertexPosition;
       attribute vec4 aVertexColor;
-      varying lowp vec4 vColor;
+      varying  vec4 vColor;
       void main(){
           gl_Position = aVertexPosition;
           vColor = aVertexColor;
@@ -40,9 +40,11 @@ function main(canvas: HTMLCanvasElement) {
 }
 
 function initVertexBuffer(gl: WebGLRenderingContext, program: WebGLProgram) {
+  // prettier-ignore
   const verticesColors = new Float32Array([
-    0.0, 0.5, 1.0, 0.0, 0.0, 1.0, -0.5, -0.5, 0.0, 1.0, 0.0, 1.0, 0.5, -0.5,
-    0.0, 0.0, 1.0, 1.0,
+    0.0, 0.5, 1.0, 0.0, 0.0, 1.0,
+    -0.5, -0.5, 0.0, 1.0, 0.0, 1.0,
+    0.5, -0.5, 0.0, 0.0, 1.0, 1.0,
   ]);
   // 顶点个数
   const n = 3;
