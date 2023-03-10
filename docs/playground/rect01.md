@@ -3,6 +3,7 @@ title: 如何绘制一个正方形？
 group:
   title: 正方形系列
   order: 2
+order: 0
 ---
 
 :::info{title=提示}

@@ -9,6 +9,6 @@ export default function Draw({ main }: { main: Function }) {
   }, []);
 
   return (
-    <canvas ref={canvasRef} id="glcanvas" width="640" height="480"></canvas>
+    <canvas ref={canvasRef} id="glcanvas" width="400" height="400"></canvas>
   );
 }
