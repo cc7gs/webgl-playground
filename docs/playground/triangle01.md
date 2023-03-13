@@ -2,7 +2,7 @@
 title: 如何绘制一个三角形？
 group:
   title: 三角形系列
-  order: 1
+  order: 2
 order: 0
 ---
 

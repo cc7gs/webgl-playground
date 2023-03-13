@@ -2,7 +2,7 @@
 title: 如何绘制一个点？
 group:
   title: 绘制点
-  order: 0
+  order: 1
 ---
 
 ## 绘制一个点
@@ -30,3 +30,5 @@ group:
 
 - attribute 变量：传输的那些与顶点相关的数据
 - uniform 变量：与顶点数据无关的数据
+
+更多细节可以 [查看](/playground/glsles#全局变量与局部变量)
