@@ -146,6 +146,23 @@ function loadTexture(
 
 <code src="../demos/triangle/texture.tsx" ></code>
 
+### QA
+
+1. 为什么要对纹理图像进行 y 轴反转？
+   y 轴反转是因为 WebGL 中的纹理坐标原点是左下角，而图片的原点是左上角，所以需要对纹理图像进行 y 轴反转。
+2. 为什么要开启 0 号纹理单元？
+   WebGL 中可以同时使用多个纹理，每个纹理都有一个编号，称为纹理单元。默认情况下，WebGL 会为每个纹理单元分配一个纹理，这个纹理就是一个纯白色的纹理。所以，如果我们不开启 0 号纹理单元，那么就会使用这个纯白色的纹理，而不是我们加载的纹理图像。
+3. 为什么要向 target 绑定纹理对象？
+   因为纹理对象是一个特殊的对象，它不是通过`gl.bindBuffer()`绑定到缓冲区对象上的，而是通过`gl.bindTexture()`绑定到 target 上的。target 可以是`gl.TEXTURE_2D`或`gl.TEXTURE_CUBE_MAP`。
+   - TEXTURE_2D：二维纹理
+   - TEXTURE_CUBE_MAP：立方体纹理
+4. 为什么要配置纹理参数？
+   配置纹理参数是了处理纹理图像映射到图元上时的一些问题，比如纹理图像的像素比图元的像素多，这时就需要对纹理图像进行缩小处理，这就是`gl.TEXTURE_MIN_FILTER`的作用。`gl.TEXTURE_MIN_FILTER`有很多种取值，比如`gl.NEAREST`、`gl.LINEAR`、`gl.NEAREST_MIPMAP_NEAREST`、`gl.LINEAR_MIPMAP_NEAREST`、`gl.NEAREST_MIPMAP_LINEAR`、`gl.LINEAR_MIPMAP_LINEAR`等等，这些取值的含义可以参考[这里](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLRenderingContext/texParameter)。
+5. 为什么要将纹理图像分配给纹理对象？
+   将纹理图像分配给纹理对象，就是将纹理图像加载到纹理对象中，这样才能使用纹理图像。具体含义可以参考[这里](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGLRenderingContext/texImage2D)。
+6. 为什么要将 0 号纹理传递给着色器？
+   0 号纹理单元是默认的纹理单元，所以我们需要将 0 号纹理单元传递给着色器，这样着色器才能使用 0 号纹理单元中的纹理图像。
+
 ## 拓展
 
 完整展示纹理图像，相当纹理坐标与顶点坐标一一对应。
