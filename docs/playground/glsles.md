@@ -121,14 +121,14 @@ precision mediump float;
 
 ### 默认精度
 
-｜着色器类型｜数据类型｜默认精度｜
-｜-｜-｜-｜
-｜顶点着色器｜ float ｜ highp ｜
-｜顶点着色器｜ int ｜ highp ｜
-｜顶点着色器｜ bool ｜ highp ｜
-｜片元着色器｜ init ｜ mediump ｜
-｜片元着色器｜ float ｜无｜
-｜片元着色器｜ sampler2D ｜ lowp ｜
-｜片元着色器｜ samplerCube ｜ lowp ｜
+| 着色器类型 | 数据类型    | 默认精度 |
+| ---------- | ----------- | -------- |
+| 顶点着色器 | float       | highp    |
+| 顶点着色器 | int         | highp    |
+| 顶点着色器 | bool        | highp    |
+| 片元着色器 | int         | mediump  |
+| 片元着色器 | float       | 无       |
+| 片元着色器 | sampler2D   | lowp     |
+| 片元着色器 | samplerCube | lowp     |
 
 片元着色器中的 float 类型没有默认精度，因此必须指定精度。如果不指定精度，编译器会报错。
