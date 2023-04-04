@@ -36,7 +36,7 @@ function main(canvas: HTMLCanvasElement) {
           // 计算光线方向和法向量的点积
           float nDotL = max(dot(uLightDirection, normal), 0.0);
           // 计算漫反射光的颜色
-          vec3 diffuse = uLightColor * vec3(aVertexColor) * nDotL;
+          vec3 diffuse = uLightColor * aVertexColor.rgb * nDotL;
           vColor = vec4(diffuse, aVertexColor.a);
 
       }
@@ -62,14 +62,16 @@ function main(canvas: HTMLCanvasElement) {
   // 设置光线颜色（白色）
   gl.uniform3f(uLightColor, 1.0, 1.0, 1.0);
   // 设置光线方向（世界坐标系下）
-  gl.uniform3fv(uLightDirection,  vec3.fromValues(0.3, -0.7, -0.5));
+  const lightDirection = vec3.fromValues(0.3, 3.0, 4.0);
+  vec3.normalize(lightDirection, lightDirection);
+  gl.uniform3fv(uLightDirection,  lightDirection);
 
 
   // 设置视点、可视空间
   const mvpMatrix = mat4.create();
   const perspectiveMatrix = mat4.create();
   const viewMatrix = mat4.create();
-  mat4.perspective(perspectiveMatrix, Math.PI / 4, 1, 0.1, 100);
+  mat4.perspective(perspectiveMatrix, Math.PI / 6, canvas.width/canvas.height,1, 100);
   mat4.lookAt(viewMatrix, [3, 3, 7], [0, 0, 0], [0, 1, 0]);
   mat4.multiply(mvpMatrix, perspectiveMatrix, viewMatrix);
   gl.uniformMatrix4fv(uMvpMatrix, false, mvpMatrix);
@@ -185,42 +187,43 @@ function initVertexBuffer(gl: WebGLRenderingContext, program: WebGLProgram) {
   ]);
   
   const cubeNormals = new Float32Array([
-    // 正X轴面
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-  
-    // 负X轴面
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-    -1.0, 0.0, 0.0,
-  
-    // 正Y轴面
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-  
-    // 负Y轴面
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-    0.0, -1.0, 0.0,
-  
-    // 正Z轴面
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0,
-  
-    // 负Z轴面
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0,
-    0.0, 0.0, -1.0
-  ]);
+    // 前面 - Z轴正向 (0, 0, 1)
+    0, 0, 1,
+    0, 0, 1,
+    0, 0, 1,
+    0, 0, 1,
+
+    // 右面 - X轴正向 (1, 0, 0)
+    1, 0, 0,
+    1, 0, 0,
+    1, 0, 0,
+    1, 0, 0,
+
+    // 后面 - Z轴负向 (0, 0, -1)
+    0, 0, -1,
+    0, 0, -1,
+    0, 0, -1,
+    0, 0, -1,
+
+    // 左面 - X轴负向 (-1, 0, 0)
+    -1, 0, 0,
+    -1, 0, 0,
+    -1, 0, 0,
+    -1, 0, 0,
+
+    // 顶面 - Y轴正向 (0, 1, 0)
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0,
+
+    // 底面 - Y轴负向 (0, -1, 0)
+    0, -1, 0,
+    0, -1, 0,
+    0, -1, 0,
+    0, -1, 0
+]);
+
   
 
   // 创建缓冲区对象
