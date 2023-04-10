@@ -29,7 +29,7 @@
     "antd": "^5",
     "dumi": "^2.0.2",
     "dumi-theme-antd-style": "latest",
-    "gl-matrix": "^3.4.3",
+    "gl-matrix": "^2.8.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
