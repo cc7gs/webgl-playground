@@ -4,4 +4,4 @@ group: 正方形系列
 order: 6
 ---
 
-<code src="../demos/rect/cube/index.tsx" ></code>
+<code src="../demos/rect/lighting/index.tsx" ></code>
