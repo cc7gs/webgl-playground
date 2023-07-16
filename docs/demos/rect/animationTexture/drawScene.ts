@@ -24,7 +24,7 @@ export function drawScene(gl: WebGLRenderingContext, programInfo: IProgramInfo, 
     // and 100 units away from the camera.
     const fieldOfView = 45 * Math.PI / 180;   // in radians
     const canvas = gl.canvas as HTMLCanvasElement
-    const aspect = canvas.clientWidth / canvas.clientHeight;
+    const aspect = canvas.clientWidth / canvas.clientHeight || 1;
     const zNear = 0.1;
     const zFar = 100.0;
     const projectionMatrix = mat4.create();

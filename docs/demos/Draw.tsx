@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Draw({ main }: { main: Function }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -8,7 +8,5 @@ export default function Draw({ main }: { main: Function }) {
     main(canvasRef.current);
   }, []);
 
-  return (
-    <canvas ref={canvasRef} id="glcanvas" width="400" height="400"></canvas>
-  );
+  return <canvas ref={canvasRef} width="600" height="600"></canvas>;
 }
