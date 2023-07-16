@@ -2,14 +2,14 @@
   "name": "webgl-playground",
   "version": "0.0.1",
   "description": "A static site based on dumi",
-  "scripts": {
-    "start": "npm run dev",
-    "dev": "dumi dev",
-    "build": "dumi build",
-    "prepare": "husky install && dumi setup"
-  },
-  "authors": [],
+  "repository": "git@github.com:cc7gs/webgl-playground.git",
   "license": "MIT",
+  "scripts": {
+    "build": "dumi build",
+    "dev": "dumi dev",
+    "prepare": "husky install && dumi setup",
+    "start": "npm run dev"
+  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -19,6 +19,9 @@
     "*.{md,json}": [
       "prettier --write --no-error-on-unmatched-pattern"
     ]
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3"
   },
   "devDependencies": {
     "@ant-design/icons": "^5",
@@ -36,7 +39,5 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "dependencies": {
-    "gl-matrix": "^3.4.3"
-  }
+  "authors": []
 }
