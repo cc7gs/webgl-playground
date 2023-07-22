@@ -11,6 +11,10 @@ group:
 
 <code src="../demos/tetrahedron/color/index.tsx"></code>
 
-## 添加光照
+### 添加光照
 
-<!-- <code src="../demos/tetrahedron/light/index.tsx"></code> -->
+<code src="../demos/tetrahedron/light/index.tsx"></code>
+
+### 添加纹理
+
+<code src="../demos/tetrahedron/texture/index.tsx"></code>
