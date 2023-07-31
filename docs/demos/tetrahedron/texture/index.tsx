@@ -1,3 +1,4 @@
+import { loadTexture } from '../../rect/lighting/loadTexture';
 import Draw from '../../Draw';
 import { initShaderProgram } from '../../utils';
 import { drawScene } from './drawScene';
@@ -26,24 +27,26 @@ function main(canvas: HTMLCanvasElement) {
   // 顶点着色器片段
   const vsSource = `
       attribute vec4 aVertexPosition;
-      attribute vec3 aVertexColor;
+      attribute vec2 aTextureCoord;
 
       uniform mat4 uModelViewMatrix;
       uniform mat4 uProjectionMatrix;
 
-      varying lowp vec3 vColor;
+      varying highp vec2 vTextureCoord;
       
       void main(){
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-        vColor = aVertexColor;  // 将数据传递给片元着色器
+        vTextureCoord = aTextureCoord;
       }
   `;
   // 片元着色器片段
   const fsSource = `
-  varying lowp vec3 vColor;
+  varying highp vec2 vTextureCoord;
+  
+  uniform sampler2D uSampler;
 
   void main(){
-    gl_FragColor = vec4(vColor, 1.0);
+    gl_FragColor =  texture2D(uSampler, vTextureCoord);
   }
   `;
 
@@ -55,7 +58,7 @@ function main(canvas: HTMLCanvasElement) {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      aTextureCoord: gl.getAttribLocation(shaderProgram, 'aTextureCoord'),
       // textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
     },
     uniformLocations: {
@@ -67,13 +70,21 @@ function main(canvas: HTMLCanvasElement) {
     },
   };
 
+  // Load texture
+  const texture = loadTexture(
+    gl,
+    'https://mdn.github.io/dom-examples/webgl-examples/tutorial/sample6/cubetexture.png',
+  );
+  // Flip image pixels into the bottom-to-top order that WebGL expects.
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
   let then = 0;
 
   function render(now: number) {
     now *= 0.001;
     deltaTime = now - then;
     then = now;
-    drawScene(gl!, programInfo, cubeRotation);
+    drawScene(gl!, programInfo, texture!, cubeRotation);
     cubeRotation += deltaTime;
     requestAnimationFrame(render);
   }

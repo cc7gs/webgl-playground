@@ -9,6 +9,7 @@ interface IProgramInfo {
 export function drawScene(
   gl: WebGLRenderingContext,
   programInfo: IProgramInfo,
+  texture: WebGLTexture,
   cubeRotation: number,
 ) {
   gl.clearColor(0.0, 0.0, 0.0, 1.0); // Clear to black, fully opaque
@@ -86,6 +87,16 @@ export function drawScene(
     modelViewMatrix,
   );
 
+
+  // Tell WebGL we want to affect texture unit 0
+  gl.activeTexture(gl.TEXTURE0);
+
+  // Bind the texture to texture unit 0
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Tell the shader we bound the texture to texture unit 0
+  gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
+
   gl.drawElements(gl.TRIANGLES, 12, gl.UNSIGNED_BYTE, 0);
 }
 
@@ -121,17 +132,32 @@ function initVertexBuffer(
   );
 
   // 颜色缓冲区
-  var vertexColorBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
-  var colors = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0];
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-  gl.vertexAttribPointer(
-    programInfo.attribLocations.vertexColor,
-    3,
-    gl.FLOAT,
-    false,
-    0,
-    0,
+  const textureCoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, textureCoordBuffer);
+
+  const textureCoordinates = [
+    0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1,
+  ];
+
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array(textureCoordinates),
+    gl.STATIC_DRAW,
   );
-  gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
+  const num = 2; // every coordinate composed of 2 values
+  const type = gl.FLOAT; // the data in the buffer is 32-bit float
+  const normalize = false; // don't normalize
+  const stride = 0; // how many bytes to get from one set to the next
+  const offset = 0; // how many bytes inside the buffer to start from
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, textureCoordBuffer);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.textureCoord,
+    num,
+    type,
+    normalize,
+    stride,
+    offset,
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
 }
