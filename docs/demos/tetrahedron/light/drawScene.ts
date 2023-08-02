@@ -134,4 +134,25 @@ function initVertexBuffer(
     0,
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
+
+  // 法线缓冲区
+  var vertexNormalBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuffer);
+  var vertexNormals = [
+    0.0, 0.0, 1.0, -1, -1.0, 0.0, 1.0, -1.0, 0.0, 0.0, 0.0, -1.0,
+  ];
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array(vertexNormals),
+    gl.STATIC_DRAW,
+  );
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexNormal,
+    3,
+    gl.FLOAT,
+    false,
+    0,
+    0,
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
 }

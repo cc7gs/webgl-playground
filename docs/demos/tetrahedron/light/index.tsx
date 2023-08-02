@@ -28,8 +28,9 @@ function main(canvas: HTMLCanvasElement) {
   const vsSource = `
       attribute vec4 aVertexPosition;
       attribute vec4 aVertexColor;
-      attribute vec4 aVertexNormal; // 法向量
+      attribute vec3 aVertexNormal; // 法向量
 
+      uniform mat4 uNormalMatrix;
       uniform mat4 uModelViewMatrix;
       uniform mat4 uProjectionMatrix;
 
@@ -37,23 +38,24 @@ function main(canvas: HTMLCanvasElement) {
       uniform vec3 uLightColor; // 光线颜色
       uniform vec3 uAmbientLight; // 环境光颜色
       
-      varying  vec4 vColor;
+      varying highp vec4 vColor;
 
       void main(){
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-        vec3 normal = normalize(vec3(aVertexNormal));
-          // 计算光线方向和法向量的点积
-          float nDotL = max(dot(uLightDirection, normal), 0.0);
-          // 计算漫反射光的颜色
-          vec3 diffuse = uLightColor * aVertexColor.rgb * nDotL;
-          // 计算环境光产生的反射光颜色
-          vec3 ambient = uAmbientLight * aVertexColor.rgb;
-          vColor = vec4(ambient+diffuse, aVertexColor.a);
+        highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
+        highp vec3 directionalLightColor = vec3(1, 1, 1);
+        highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
+  
+        highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
+  
+        highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
+        highp vec3 vLighting = ambientLight + (directionalLightColor * directional);
+        vColor=vec4(aVertexColor.rgb*vLighting,1.0);
       }
   `;
   // 片元着色器片段
   const fsSource = `
-  varying lowp vec4 vColor;
+  varying highp vec4 vColor;
 
   void main(){
     gl_FragColor = vColor;
@@ -85,6 +87,7 @@ function main(canvas: HTMLCanvasElement) {
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
       vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
       // textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
+      aVertexNormal: gl.getAttribLocation(shaderProgram, 'aVertexNormal'),
     },
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(
@@ -92,6 +95,7 @@ function main(canvas: HTMLCanvasElement) {
         'uProjectionMatrix',
       ),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+      normalMatrix: gl.getUniformLocation(shaderProgram, 'uNormalMatrix'),
     },
   };
 
