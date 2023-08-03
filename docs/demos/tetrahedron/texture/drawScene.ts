@@ -11,6 +11,7 @@ export function drawScene(
   gl: WebGLRenderingContext,
   programInfo: IProgramInfo,
   buffers: IBuffers,
+  texture: WebGLTexture,
   cubeRotation: number,
 ) {
   // 清空画布
@@ -88,30 +89,19 @@ export function drawScene(
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.colors);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.textureCoord);
   gl.vertexAttribPointer(
-    programInfo.attribLocations.vertexColor,
-    3,
+    programInfo.attribLocations.textureCoord,
+    2,
     gl.FLOAT,
     false,
     0,
     0,
   );
-  gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
+  gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
-
-
-  // gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
-  // gl.vertexAttribPointer(
-  //   programInfo.attribLocations.vertexNormal,
-  //   3,
-  //   gl.FLOAT,
-  //   false,
-  //   0,
-  //   0,
-  // );
-  // gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
 
 
 
@@ -126,11 +116,15 @@ export function drawScene(
     false,
     modelViewMatrix,
   );
-  gl.uniformMatrix4fv(
-    programInfo.uniformLocations.normalMatrix,
-    false,
-    normalMatrix,
-  );
+
+   // Tell WebGL we want to affect texture unit 0
+   gl.activeTexture(gl.TEXTURE0);
+
+   // Bind the texture to texture unit 0
+   gl.bindTexture(gl.TEXTURE_2D, texture);
+
+   // Tell the shader we bound the texture to texture unit 0
+   gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
 
   gl.drawElements(gl.TRIANGLES, buffers.numVertices, gl.UNSIGNED_BYTE, 0);
 }

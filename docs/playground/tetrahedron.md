@@ -17,4 +17,4 @@ group:
 
 ### 添加纹理
 
-<!-- <code src="../demos/tetrahedron/texture/index.tsx"></code> -->
+<code src="../demos/tetrahedron/texture/index.tsx"></code>
