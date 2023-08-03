@@ -1,7 +1,7 @@
-import { loadTexture } from '../../rect/lighting/loadTexture';
 import Draw from '../../Draw';
 import { initShaderProgram } from '../../utils';
 import { drawScene } from './drawScene';
+import { initBuffers } from './initBuffers';
 
 export default function Basic() {
   return <Draw main={main} />;
@@ -27,39 +27,50 @@ function main(canvas: HTMLCanvasElement) {
   // 顶点着色器片段
   const vsSource = `
       attribute vec4 aVertexPosition;
-      attribute vec2 aTextureCoord;
+      attribute vec3 aVertexNormal; // 法向量
+      attribute vec3 aVertexColor;
 
+      uniform mat4 uNormalMatrix;
       uniform mat4 uModelViewMatrix;
       uniform mat4 uProjectionMatrix;
-
-      varying highp vec2 vTextureCoord;
+     
       
+      varying highp vec3 vLighting;
+      varying highp vec3 vColor;
+
       void main(){
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-        vTextureCoord = aTextureCoord;
+        vColor = aVertexColor;
+
+        highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
+        highp vec3 directionalLightColor = vec3(1, 1, 1);
+        highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
+  
+        highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
+  
+        highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
+        vLighting = ambientLight + (directionalLightColor * directional);
       }
   `;
   // 片元着色器片段
   const fsSource = `
-  varying highp vec2 vTextureCoord;
-  
-  uniform sampler2D uSampler;
+  varying highp vec3 vColor;
+  varying highp vec3 vLighting;
 
   void main(){
-    gl_FragColor =  texture2D(uSampler, vTextureCoord);
+    gl_FragColor = vec4(vColor*vLighting, 1.0);
   }
   `;
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
-
   if (!shaderProgram) throw new Error('initShaderProgram failed');
 
   const programInfo = {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-      aTextureCoord: gl.getAttribLocation(shaderProgram, 'aTextureCoord'),
-      // textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
+      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      aVertexNormal: gl.getAttribLocation(shaderProgram, 'aVertexNormal'),
     },
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(
@@ -67,16 +78,11 @@ function main(canvas: HTMLCanvasElement) {
         'uProjectionMatrix',
       ),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+      normalMatrix: gl.getUniformLocation(shaderProgram, 'uNormalMatrix'),
     },
   };
 
-  // Load texture
-  const texture = loadTexture(
-    gl,
-    'https://mdn.github.io/dom-examples/webgl-examples/tutorial/sample6/cubetexture.png',
-  );
-  // Flip image pixels into the bottom-to-top order that WebGL expects.
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  const buffers = initBuffers(gl);
 
   let then = 0;
 
@@ -84,7 +90,7 @@ function main(canvas: HTMLCanvasElement) {
     now *= 0.001;
     deltaTime = now - then;
     then = now;
-    drawScene(gl!, programInfo, texture!, cubeRotation);
+    drawScene(gl!, programInfo, buffers, cubeRotation);
     cubeRotation += deltaTime;
     requestAnimationFrame(render);
   }

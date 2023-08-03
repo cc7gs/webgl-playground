@@ -31,7 +31,7 @@ function main(canvas: HTMLCanvasElement) {
       uniform mat4 uModelViewMatrix;
       uniform mat4 uProjectionMatrix;
 
-      varying lowp vec3 vColor;
+      varying highp vec3 vColor;
       
       void main(){
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
@@ -40,7 +40,7 @@ function main(canvas: HTMLCanvasElement) {
   `;
   // 片元着色器片段
   const fsSource = `
-  varying lowp vec3 vColor;
+  varying highp vec3 vColor;
 
   void main(){
     gl_FragColor = vec4(vColor, 1.0);
